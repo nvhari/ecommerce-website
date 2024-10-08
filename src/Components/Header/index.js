@@ -2,10 +2,12 @@ import React from "react";
 import Logo from "../../assets/img/logo.jpg";
 import Button from "@mui/material/Button";
 import CountryDropdown from "../CountryDropdown";
-import { IoSearchOutline } from "react-icons/io5";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaRegUser } from "react-icons/fa6";
 import { IoBagOutline } from "react-icons/io5";
+import SearchBox from "./SearchBox";
+import Navigation from "./Navigation";
+
 
 const Header = () => {
   return (
@@ -31,12 +33,7 @@ const Header = () => {
             <div className="col-sm-10 d-flex align-items-center part2">
               <CountryDropdown />
               {/*Header search Start here */}
-              <div className="header-search ml-3 mr-3">
-                <input type="text" placeholder="Search for products..." />
-                <Button>
-                  <IoSearchOutline />
-                </Button>
-              </div>
+              <SearchBox />
               {/*Header search End here */}
               <div className="part3 d-flex align-items-center   ">
                 <Button className="circle mr-5">
@@ -56,6 +53,9 @@ const Header = () => {
           </div>
         </div>
       </header>
+
+     <Navigation />
+
     </div>
   );
 };
