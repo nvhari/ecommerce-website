@@ -9,16 +9,23 @@ import { GoLightBulb } from "react-icons/go";
 import { GiFruitBowl } from "react-icons/gi";
 import { LiaBlogSolid } from "react-icons/lia";
 import { LuContact } from "react-icons/lu";
+import { FaAngleRight } from "react-icons/fa6";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navigation = () => {
-  const [isOpenNavbar, setisOpenNavbar]= useState(true)
+  const [isOpenNavbar, setisOpenNavbar] = useState(false);
   return (
     <nav>
       <div className="container">
         <div className="row">
           <div className="col-sm-3 nav-part1">
             <div className="car-wrapper">
-              <Button className="allcat-tab" onClick={()=>{setisOpenNavbar(!isOpenNavbar)}}>
+              <Button
+                className="allcat-tab"
+                onClick={() => {
+                  setisOpenNavbar(!isOpenNavbar);
+                }}
+              >
                 <span className="icon1 mr-2">
                   <IoIosMenu />
                 </span>
@@ -27,12 +34,36 @@ const Navigation = () => {
                   <TfiAngleDown />
                 </span>
               </Button>
-              <div className={`side-navbar ${isOpenNavbar=== true ? 'open' :''}`} >
+              <div
+                className={`side-navbar ${isOpenNavbar === true ? "open" : ""}`}
+              >
                 <ul>
                   <li className="list-inline-item">
                     <Link to="/">
-                      <Button>men </Button>
+                      <Button>
+                        men < FaAngleRight  />{" "}
+                      </Button>
                     </Link>
+                    <div className="submenu shadow">
+                      <Link to="/">
+                        <Button>Clothing</Button>
+                      </Link>
+                      <Link to="/">
+                        <Button>Footwear</Button>
+                      </Link>
+                      <Link to="/">
+                        <Button>Watches</Button>
+                      </Link>
+                      <Link to="/">
+                        <Button>Clothing</Button>
+                      </Link>
+                      <Link to="/">
+                        <Button>Footwear</Button>
+                      </Link>
+                      <Link to="/">
+                        <Button>Watches</Button>
+                      </Link>
+                    </div>
                   </li>
                   <li className="list-inline-item">
                     <Link to="/">

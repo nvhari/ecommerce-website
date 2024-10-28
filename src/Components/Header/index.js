@@ -47,7 +47,7 @@ const context = useContext(MyContext);
               <SearchBox />
               {/*Header search End here */}
               <div className="part3 d-flex align-items-center   ">
-                <Button className="circle mr-5">
+                <Button className="circle ">
                   <FaRegUser />
                 </Button>
                 <div className="cart-tab d-flex aligh-items-center">
