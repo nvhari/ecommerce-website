@@ -33,6 +33,10 @@ button {
   color: #fff !important;
   text-transform: capitalize;
 }
+.btn-blue svg{
+  font-size: 20px !important;
+  margin-right: 10px;
+}
 .btn-big {
   font-size: 15px !important;
   padding: 7px 30px !important;
@@ -975,4 +979,64 @@ footer .compyright ul li svg:hover {
 }
 .product-details .btn-circle:hover {
   background: #fafafa;
+}
+/* //Cart-page// */
+a:hover {
+  text-decoration: none;
+}
+
+.cart-page .table thead {
+  background: #ececec !important;
+  overflow: hidden;
+}
+.cart-itemimg-wrapper {
+  width: 250px;
+}
+.cart-itemimg-wrapper .image-wrapper {
+  width: 100px;
+  overflow: hidden;
+}
+
+.cart-itemimg-wrapper h6 {
+  color: #343434;
+  font-weight: bold;
+}
+.cart-itemimg-wrapper h6:hover {
+  color: #233a95;
+}
+.table-responsive {
+  text-align: center;
+}
+.table-responsive .info {
+  text-align: start;
+}
+.remove {
+  cursor: pointer;
+}
+.remove svg {
+  font-size: 30px;
+}
+.remove svg:hover {
+  color: #ed174a;
+}
+.cart-page .quantity-drop button {
+  zoom: 75%;
+}
+.cart-page table th,
+.cart-page table td {
+  vertical-align: middle;
+  border-top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+.cart-page table tbody tr:hover {
+  background: #fafafa;
+}
+.cart-details {
+  border-radius: 7px !important ;
+}
+.cart-details h4 {
+  font-size: 16px;
+  font-weight: 800 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
 }

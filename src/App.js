@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import Footer from "./Components/Footer";
 import Listing from "./Pages/Listing";
 import ProductDetails from "./Pages/ProductDetails";
+import Cart from "./Pages/Cart";
  
 
 const MyContext = createContext();
@@ -40,6 +41,8 @@ function App() {
           <Route path="/" exact={true} element={<Home />} />
           <Route path="/cat/:id" exact={true} element={<Listing />} />
           <Route exact={true} path="/product/:id" element={<ProductDetails  />}></Route>
+          <Route exact={true} path="/cart" element={<Cart  />}></Route>
+
         </Routes>
         <Footer />
       </MyContext.Provider>
