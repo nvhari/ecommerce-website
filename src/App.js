@@ -8,6 +8,7 @@ import { createContext } from "react";
 import { useState, useEffect } from "react";
 import Footer from "./Components/Footer";
 import Listing from "./Pages/Listing";
+import ProductDetails from "./Pages/ProductDetails";
  
 
 const MyContext = createContext();
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/" exact={true} element={<Home />} />
           <Route path="/cat/:id" exact={true} element={<Listing />} />
+          <Route exact={true} path="/product/:id" element={<ProductDetails  />}></Route>
         </Routes>
         <Footer />
       </MyContext.Provider>

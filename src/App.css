@@ -15,7 +15,7 @@
 }
 body {
   font-family: "Lato", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.8);
   overflow-x: hidden;
 }
@@ -48,8 +48,19 @@ button {
 .btn-round {
   border-radius: 30px !important;
 }
+.btn-circle {
+  border-radius: 50% !important 
+  ;
+  min-width: auto;
+}
 .badge {
   padding: 7px 10px;
+  display: inline-block;
+  border-radius: 20px;
+}
+.badge-success {
+  color: #00b853;
+  background: #e5f8ed;
 }
 @media (min-width: 1400px) {
   .container
@@ -503,13 +514,13 @@ e-banner-section .slick-arrows.slick-next::before {
   padding: 15px;
 }
 .info .old-price {
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.2);
   text-decoration: line-through;
 }
 .info .net-price {
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: bold;
   margin-left: 15px;
 }
@@ -905,4 +916,63 @@ footer .compyright ul li svg:hover {
 }
 .product-listing .product-item.one .img-wrapper {
   width: 25%;
+}
+/* //Product detail-page// */
+.section {
+  padding: 45px 0px;
+}
+.product-details .hd {
+  font-size: 26px;
+}
+.product-details .old-price {
+  font-size: 20px;
+}
+.product-details .net-price {
+  font-size: 22px;
+}
+.product-size {
+  width: 100%;
+  height: auto;
+  padding: 25px 0;
+}
+.product-size ul li {
+  margin-right: 10px !important;
+}
+.product-size ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px !important;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 5px !important;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px !important;
+  transition: all 0.1s ease-in-out;
+}
+.product-size ul li a:hover {
+  background: #fafafa;
+}
+.product-size ul li a.active {
+  background: #6d4aae !important;
+  color: #fff !important;
+}
+.product-details .btn-circle {
+  min-width: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: #edeef5 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #000 !important;
+  padding: 5px !important;
+}
+.product-details .btn-circle svg {
+  color: #000;
+  opacity: 0.8;
+  font-size: 18px;
+}
+.product-details .btn-circle:hover {
+  background: #fafafa;
 }
