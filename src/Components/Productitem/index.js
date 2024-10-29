@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import { FaRegHeart } from "react-icons/fa6";
 import ProductModal from "../ProductModal";
 
-function ProductItem() {
+function ProductItem(props) {
   const [isOpenProductModal, setisOpenProductModal] = useState(false);
 
   const viewProductDetails = (id) => {
@@ -17,7 +17,7 @@ function ProductItem() {
    
   return (
     <>
-      <div className="item product-item">
+      <div className={`item product-item ${props.itemView}`}>
         <div className="img-wrapper">
           <img
             src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729065296/1729065290584_buynewtrend-women-maroon-cotton-blend-top-product-images-rvb22aqlk7-1-202201130044.jpg"
