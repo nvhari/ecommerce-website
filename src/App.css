@@ -32,14 +32,16 @@ button {
   background: #6d4aae !important;
   color: #fff !important;
   text-transform: capitalize;
+  font-weight: 500 !important;
+  padding: 7px 20px !important;
 }
-.btn-blue svg{
+.btn-blue svg {
   font-size: 20px !important;
   margin-right: 10px;
 }
 .btn-big {
   font-size: 15px !important;
-  padding: 7px 30px !important;
+  padding: 8px 30px !important;
   min-width: auto;
 }
 .btn-sml {
@@ -131,10 +133,10 @@ button {
   margin-left: 7px;
 }
 .list-inline-item:not(:last-child) {
-  margin-right: -0.5rem;
+  margin-right: 0.5rem;
 }
 .header-search {
-  width: 60%;
+  width: 52%;
   height: 60px;
   background-color: #f3f4f7;
   padding: 5px !important;
@@ -1039,4 +1041,92 @@ a:hover {
   font-weight: 800 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 15px;
+}
+/* // .signin-page// */
+.signin-page {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  overflow: hidden;
+}
+.signin-page .shape-buttom {
+  position: absolute;
+  top: auto;
+  bottom: -6px;
+  right: 0;
+  left: 0;
+  z-index: -1;
+}
+.signin-page::after {
+  position: absolute;
+  content: " ";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(#1e3d81, #2334a3);
+  opacity: 0.9;
+  z-index: -1;
+}
+.signin-page .box form .border-effect {
+  position: relative;
+  color: #337ab7;
+  text-decoration: none;
+}
+
+.signin-page .box form .border-effect::after {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background-color: #102a44;
+  content: "";
+  transition: 0.2s width;
+}
+
+.signin-page .box form .border-effect:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.signin-page .box form .border-effect:hover::after {
+  width: 100%; /* Expands the underline to full width on hover */
+}
+
+.signin-page .box {
+  width: 400px;
+  height: auto;
+  background: #fff;
+  margin: auto;
+  position: relative;
+  z-index: 100;
+  border-radius: 10px !important;
+}
+
+.signin-page .box h2 {
+  font-size: 25px;
+  font-weight: 600;
+}
+.signin-page .box form {
+  padding: 20px 30px;
+}
+
+.signin-page .box .txt {
+  font-size: 14px;
+  font-weight: bold;
+}
+.signin-page button {
+  width: 100%;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8);
+}
+.signin-page .login-with-google img {
+  width: 35px;
+  margin-right: 10px;
+}
+/* //sign up page */
+.signup-page .box {
+  width: 500px;
 }

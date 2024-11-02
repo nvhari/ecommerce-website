@@ -8,7 +8,7 @@ import { IoBagOutline } from "react-icons/io5";
 import SearchBox from "./SearchBox";
 import Navigation from "./Navigation";
 import { MyContext } from "../../App";
- 
+import { Link } from "react-router-dom";
  
 
 
@@ -46,16 +46,19 @@ const context = useContext(MyContext);
               {/*Header search Start here */}
               <SearchBox />
               {/*Header search End here */}
-              <div className="part3 d-flex align-items-center   ">
-                <Button className="circle ">
-                  <FaRegUser />
-                </Button>
+              <div className="part3 d-flex align-items-center">
+                {
+                  context.isLogin!==true ? <Link to="/signIn"> <Button className="btn-blue btn-round mr-3">Sign In</Button></Link>
+                   :<Button className="circle "><FaRegUser /> </Button>
+                }
+                
                 <div className="cart-tab d-flex aligh-items-center">
                   <span className="price">$3.29</span>
                   <div className="position-relative">
+                    <Link to="/cart">
                     <Button className="circle">
                       <IoBagOutline />
-                    </Button>
+                    </Button></Link>
                     <sapan className="count d-flex aligh-items-center justify-content-center">1</sapan>
                   </div>
                 </div>
