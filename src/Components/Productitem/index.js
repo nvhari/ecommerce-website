@@ -1,31 +1,67 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import { SlSizeFullscreen } from "react-icons/sl";
 import Rating from "@mui/material/Rating";
 import { FaRegHeart } from "react-icons/fa6";
 import ProductModal from "../ProductModal";
+import Slider from "react-slick";
+import { MyContext } from "../../App";
+import { Link, useNavigate } from "react-router-dom";
 
 function ProductItem(props) {
-  const [isOpenProductModal, setisOpenProductModal] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const sliderRef = useRef();
 
-  const viewProductDetails = (id) => {
-    setisOpenProductModal(true);
+  const context = useContext(MyContext);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    loop: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
   };
-    const CloseProductModal =()=>{
-      setisOpenProductModal(false);
-    } 
+
+  //
+  const history = useNavigate();
+  const viewProductDetails = (id) => {
+    context.setisOpenProductModal({
+      id: id,
+      open: true,
+    });
+  };
+
+
+  
+  useEffect(() => {
+    // history(`item product-item ${props.itemView}`)
+    
    
+    console.log(props.item);
+  }, []);
   return (
     <>
       <div className={`item product-item ${props.itemView}`}>
         <div className="img-wrapper">
-          <img
-            src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729065296/1729065290584_buynewtrend-women-maroon-cotton-blend-top-product-images-rvb22aqlk7-1-202201130044.jpg"
-            className="w-100"
-          />
-          <span className="badge badge-primary">28%</span>
+          <Link to={`products/${props.item?._id}`}>
+            {isHovered === true ? (
+              <Slider {...settings} ref={sliderRef}>
+                {props.item?.images?.map((image, index) => {
+                  return (
+                    <div className="" key={index}>
+                      <img src={image} className="w-100"></img>
+                    </div>
+                  );
+                })}
+              </Slider>
+            ) : (
+              <img src={props.item?.images[0]} className="w-100" />
+            )}
+          </Link>
+          <span className="badge badge-primary">{props.item?.discount}%</span>
           <div className="actions">
-            <Button onClick={() => viewProductDetails(1)}>
+            <Button onClick={() => viewProductDetails(props.item?._id)}>
               <SlSizeFullscreen />
             </Button>
             <Button>
@@ -33,24 +69,24 @@ function ProductItem(props) {
             </Button>
           </div>
         </div>
-        <div className="info">
-          <h4>Werther original candies</h4>
+        <di className="info">
+          <h4>{props?.item?.name?.substr(0, 22) + "..."}</h4>
           <sapan className="text-success d-block">In stock</sapan>
           <Rating
             className="mt-2 mb-2"
             name="read-only"
-            value={5}
+            value={parseInt(props.item?.rating)}
             readOnly
             size="small"
           />
           <div className="d-flex">
-            <span className="old-price">$20.00</span>
-            <span className="net-price text-danger">$15.00</span>
+            <span className="old-price">Rs {props.item?.oldPrice}</span>
+            <span className="net-price text-danger">
+              Rs {props.item?.price}
+            </span>
           </div>
-        </div>
+        </di>
       </div>
-
-      {isOpenProductModal == true && <ProductModal CloseProductModal={CloseProductModal} />}
     </>
   );
 }

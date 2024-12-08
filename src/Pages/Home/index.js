@@ -1,7 +1,7 @@
 import HomeBanner from "../../Components/HomeBanner";
 import Button from "@mui/material/Button";
 import { GoArrowRight } from "react-icons/go";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,20 +9,35 @@ import { Navigation } from "swiper/modules";
 import ProductItem from "../../Components/Productitem";
 import HomeCat from "../../Components/HomeCat";
 import Footer from "../../Components/Footer";
+import { fetchdataFromApi } from "../../utils/api";
 
 const Home = () => {
-  var productSliderOptions = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrow: true,
-  };
+  const [catData, setCatData] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+
+  useEffect(() => {
+    
+    fetchdataFromApi("api/categories").then((res) => {
+      setCatData(res);
+    });
+
+    const filterkey = "isFeatured";
+    fetchdataFromApi(`api/products/featured`).then((res) => {
+      setFeaturedProducts(res);
+    });
+
+    fetchdataFromApi(`api/products`).then((res) => {
+      console.log(res);
+      setProductsData(res);
+    });
+  }, []);
+
   return (
     <>
       <HomeBanner />
-      <HomeCat />
+      {catData?.length !== 0 && <HomeCat catData={catData} />}
+
       <section className="home-products">
         <div className="container">
           <div className="row">
@@ -31,13 +46,13 @@ const Home = () => {
                 <div className="banner">
                   <img
                     className="cursor w-100"
-                    src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729058293/1729058292132_New_Project_34.jpg"
+                    src="https://res.cloudinary.com/dkgonwhvj/image/upload/v1731428306/1731428304529_New_Project_34.jpg"
                   ></img>
                 </div>
                 <div className="banner mt-3">
                   <img
                     className="cursor w-100"
-                    src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729058303/1729058302157_New_Project_35.jpg"
+                    src="https://res.cloudinary.com/dkgonwhvj/image/upload/v1731428345/1731428343183_New_Project_35.jpg"
                   ></img>
                 </div>
               </div>
@@ -46,7 +61,7 @@ const Home = () => {
             <div className="col-md-9">
               <div className="d-flex align-item-center">
                 <div className="info ">
-                  <h3 className="mb-0 hd">BEST SELLERS</h3>
+                  <h3 className="mb-0 hd">FEATURED PRODUCTS</h3>
                   <p className="text-light text-sml mb-0">
                     Do not miss the current offers until the end of March
                   </p>
@@ -66,24 +81,14 @@ const Home = () => {
                   modules={[Navigation]}
                   className="mySwiper"
                 >
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
+                  {featuredProducts?.length !== 0 &&
+                    featuredProducts?.map((item, index) => {
+                      return (
+                        <SwiperSlide key={index}>
+                          <ProductItem item={item} />
+                        </SwiperSlide>
+                      );
+                    })}
                 </Swiper>
               </div>
 
@@ -109,32 +114,29 @@ const Home = () => {
                   modules={[Navigation]}
                   className="mySwiper"
                 >
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <ProductItem />
-                  </SwiperSlide>
+                  {productsData?.length !== 0 &&
+                    productsData?.map((item, index) => {
+                      return (
+                        <SwiperSlide key={index}>
+                          <ProductItem item={item} />
+                        </SwiperSlide>
+                      );
+                    })}
                 </Swiper>
               </div>
+              <div className="product_row mt-4 d-flex torow">
+                {productsData?.length !== 0 &&
+                  productsData?.map((item, index) => {
+                    return <ProductItem item={item} />;
+                  })}
+              </div>
+
               <div className="d-flex mt-4 mb-5 banner-sec">
                 <div className="banner ">
-                  <img src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729520206/1729520205930_banner-7.jpg" />
+                  <img src=" https://res.cloudinary.com/dkgonwhvj/image/upload/v1731428239/1731428237761_New_Project_3.jpg" />
                 </div>
                 <div className="banner ">
-                  <img src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729520206/1729520205930_banner-7.jpg" />
+                  <img src="https://res.cloudinary.com/dkgonwhvj/image/upload/v1731428252/1731428250193_New_Project_2.jpg" />
                 </div>
               </div>
             </div>

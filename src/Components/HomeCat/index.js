@@ -2,27 +2,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const HomeCat = () => {
-  const [itemBg, setItemBg] = useState([
-    "#fffceb",
-    "#ecffec",
-    "#feefea",
-    "#fff3ff",
-    "#f2fce4",
-    "#feefea",
-    "#fffceb",
-    "#feefea",
-    "#ecffec",
-    "#feefea",
-    "#fff3eb",
-    "#f2fce4",
-    "#feefea",
-    "#ffceb",
-    "#feefea",
-    "#ecffec",
-  ]);
+const HomeCat = (props) => {
+  // const [itemBg, setItemBg] = useState([
+  //   "#fffceb",
+  //   "#ecffec",
+  //   "#feefea",
+  //   "#fff3ff",
+  //   "#f2fce4",
+  //   "#feefea",
+  //   "#fffceb",
+  //   "#feefea",
+  //   "#ecffec",
+  //   "#feefea",
+  //   "#fff3eb",
+  //   "#f2fce4",
+  //   "#feefea",
+  //   "#ffceb",
+  //   "#feefea",
+  //   "#ecffec",
+  // ]);
   return (
     <section className="home-cat">
       <div className="container">
@@ -38,16 +38,21 @@ const HomeCat = () => {
           modules={[Navigation]}
           className="mySwiper"
         >
-          {itemBg?.map((item, index) => {
-            return (
-              <SwiperSlide>
-                <div className="item text-center cursor" style={{ background: item }}>
-                  <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-12.png" />
-                  <p>Red apple</p>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+          {/* {console.log(props.catData)} */}
+          {props.catData?.categoryList?.length !== 0 &&
+            props.catData?.categoryList?.map((cat, index) => {
+              return (
+                <SwiperSlide>
+                  <div
+                    className="item text-center cursor"
+                    style={{ background: cat.color }}
+                  >
+                    <img src={cat.images[0]} />
+                    <p>{cat.name}</p>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </section>

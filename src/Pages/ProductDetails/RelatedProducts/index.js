@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
 import ProductItem from "../../../Components/Productitem";
 import { Navigation } from "swiper/modules";
+import { fetchdataFromApi } from "../../../utils/api";
 
 function RelatedProducts(props) {
+  const [productsData, setProductsData] = useState([]);
+  useEffect(() => {
+    fetchdataFromApi(`api/products`).then((res) => {
+      console.log(res);
+      setProductsData(res);
+    });
+  }, []);
   return (
     <>
       <div className="d-flex align-item-center mt-5 mb-3">
@@ -28,24 +36,14 @@ function RelatedProducts(props) {
           modules={[Navigation]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductItem />
-          </SwiperSlide>
+          {productsData?.length !== 0 &&
+            productsData?.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <ProductItem item={item} />
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </>

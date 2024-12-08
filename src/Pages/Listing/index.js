@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../Components/SideBar";
 import Button from "@mui/material/Button";
 import { CiMenuBurger } from "react-icons/ci";
@@ -11,17 +11,30 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ProductItem from "../../Components/Productitem";
 import Pagination from "@mui/material/Pagination";
+import { fetchdataFromApi } from "../../utils/api";
 
 const Listing = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [productView, setProductView] = useState("four");
   const openDropDown = Boolean(anchorEl);
+  const [productsData, setProductsData] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+
+    //
+    fetchdataFromApi(`api/products`).then((res) => {
+      console.log(res);
+      setProductsData(res);
+    });
+  }, []);
   return (
     <section className="product-listing-page">
       <div className="container">
@@ -30,23 +43,35 @@ const Listing = () => {
 
           <div className="content-right">
             <img
-              src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729664710/1729664710059_New_Project_13.jpg"
+              src="https://res.cloudinary.com/dkgonwhvj/image/upload/v1731428381/1731428380207_banner-7.jpg"
               className="w-100"
               style={{ borderRadius: "8px" }}
             />
 
             <div className="show-by mt-3 mb-3 d-flex align-items-center">
               <div className="d-flex btn-wrapper align-items-center">
-                <Button className={productView==='one' && 'act'} onClick={() => setProductView("one")}>
+                <Button
+                  className={productView === "one" && "act"}
+                  onClick={() => setProductView("one")}
+                >
                   <CiMenuBurger />
                 </Button>
-                <Button className={productView==='two' && 'act'}  onClick={() => setProductView("two")}>
+                <Button
+                  className={productView === "two" && "act"}
+                  onClick={() => setProductView("two")}
+                >
                   <SlGrid />
                 </Button>
-                <Button className={productView==='three' && 'act'}  onClick={() => setProductView("three")}>
+                <Button
+                  className={productView === "three" && "act"}
+                  onClick={() => setProductView("three")}
+                >
                   <CgMenuGridR />
                 </Button>
-                <Button className={productView==='four' && 'act'}  onClick={() => setProductView("four")}>
+                <Button
+                  className={productView === "four" && "act"}
+                  onClick={() => setProductView("four")}
+                >
                   <TfiLayoutGrid4 />
                 </Button>
               </div>
@@ -73,14 +98,11 @@ const Listing = () => {
             </div>
 
             <div className="product-listing">
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
-              <ProductItem itemView={productView} />
+              {productsData?.length !== 0 &&
+                productsData?.map((item, index) => {
+                  return <ProductItem item={item} itemView={productView} />;
+                })}
+              {/* <ProductItem itemView={productView} /> */}
             </div>
 
             <div className="d-flex align-items-center justify-content-center mt-5">

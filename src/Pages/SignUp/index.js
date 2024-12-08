@@ -4,14 +4,131 @@ import Logo from "../../assets/img/logo.jpg";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import GoogleImg from "../../assets/img/GoogleSignInLight.png";
+import { useState } from "react";
+import { postData } from "../../utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
+
+
 
 function SignUp() {
   const context = useContext(MyContext);
+  const history = useNavigate();
+
+  const [isLoading, setIsloading] = useState(false);
+  const [formfields, setFormFields] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    isAdmin: false,
+  });
+
+  //
   useEffect(() => {
     context.setIsHeaderFooterShow(false);
   });
+
+  const onchangeInput = (e) => {
+    setFormFields(() => ({
+      ...formfields,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const register = (e) => {
+    e.preventDefault();
+    console.log(formfields);
+    try {
+      // Field validations
+      if (formfields.name === "") {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Name cannot be blank!",
+        });
+        return false;
+      }
+      if (formfields.email === "") {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Email cannot be blank!",
+        });
+        return false;
+      }
+      if (formfields.phone === "") {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Phone number cannot be blank!",
+        });
+        return false;
+      }
+      if (formfields.password === "") {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Password cannot be blank!",
+        });
+        return false;
+      }
+
+      setIsloading(true);
+      // API call to register the user
+      postData("/api/user/signup", formfields)
+        .then((res) => {
+          console.log(res);
+
+          if (res.error !== true) {
+            context.setAlertBox({
+              open: true,
+              error: false,
+              msg: "Registration successfully completed!",
+            });
+
+            // Redirect to login page after a successful registration
+            setTimeout(() => {
+              setIsloading(false);
+              history("/signIn");
+            }, 2000);
+          } else {
+            setIsloading(false);
+            // If the API returns a failure status, show the error message
+            context.setAlertBox({
+              open: true,
+              error: true,
+              msg: res.msg || "Registration failed!",
+            });
+          }
+        })
+        .catch((error) => {
+          setIsloading(false);
+          // Handle errors from the backend
+          console.log(error);
+
+          // Use the API error message if it exists
+          const errorMsg =
+            error?.response?.data?.msg ||
+            "An error occurred during registration.";
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: errorMsg,
+          });
+        });
+    } catch (error) {
+      setIsloading(false);
+      // Handle unexpected errors
+      console.log(error);
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "An unexpected error occurred!",
+      });
+    }
+  };
   return (
     <section className="section signin-page signup-page">
       <div className="shape-buttom">
@@ -35,7 +152,7 @@ function SignUp() {
             <img src={Logo} alt="Logo" />
           </div>
 
-          <form className="mt-2">
+          <form className="mt-2" onSubmit={register}>
             <h2 className="mb-3">Sign Up</h2>
             <div className="row">
               <div className="col-md-6">
@@ -44,9 +161,10 @@ function SignUp() {
                     // id="standard-basic"
                     label="Name"
                     type="text"
-                    required
                     variant="standard"
                     className="w-100"
+                    name="name"
+                    onChange={onchangeInput}
                   />
                 </div>
               </div>
@@ -57,9 +175,10 @@ function SignUp() {
                     // id="standard-basic"
                     label="Phone"
                     type="number"
-                    required
                     variant="standard"
                     className="w-100"
+                    name="phone"
+                    onChange={onchangeInput}
                   />
                 </div>
               </div>
@@ -69,9 +188,10 @@ function SignUp() {
                 id="standard-basic"
                 label="Email"
                 type="email"
-                required
                 variant="standard"
                 className="w-100"
+                name="email"
+                onChange={onchangeInput}
               />
             </div>
             <div className="form-group">
@@ -79,17 +199,22 @@ function SignUp() {
                 id="standard-basic"
                 label="Password"
                 type="password"
-                required
                 variant="standard"
                 className="w-100"
+                name="password"
+                onChange={onchangeInput}
               />
             </div>
 
             <a className="border-effect cursor txt">Forgot Password?</a>
             <div className="row mt-3 w-100">
               <div className="col-md-6">
-                <Button className="btn-blue  col btn-lg btn-big">
-                  Sign In
+                <Button className="btn-blue  col btn-lg btn-big" type="submit"
+                disabled={isLoading===true ?true:false}>
+                  {
+                    isLoading === true ? <CircularProgress color="inherit" className=" loader"/> : "Sign In"
+                  }
+                 
                 </Button>
               </div>
               <div className="col-md-6">

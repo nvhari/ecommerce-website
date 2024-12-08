@@ -4,7 +4,7 @@ import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 
 import { useEffect } from "react";
-function ProductZoom() {
+function ProductZoom(props) {
   const zoomSlider = useRef(null);
   const zoomSliderBig = useRef(null);
   const goto = (index) => {
@@ -27,7 +27,11 @@ function ProductZoom() {
     slidesToShow: 3,
     fade: false,
     arrows: true,
-  };
+    autoplay: true,
+    speed: 2500,
+    autoplaySpeed: 2500,
+    // cssEase: "linear",
+    infinite: true,};
 
   const Settings2 = {
     dots: false,
@@ -36,60 +40,35 @@ function ProductZoom() {
     slidesToShow: 1,
     fade: false,
     arrows: false,
+    autoplay: true,
+    speed: 2500,
+    autoplaySpeed: 2500,
+    // cssEase: "linear",
+    infinite: true,
   };
   return (
-  
-      <div className="product-zoom position-relative">
-        <div className="badge badge-primary">23%</div>
-        <Slider {...Settings2} className="zoomSlider" ref={zoomSliderBig}>
-          <div className="item">
-            <InnerImageZoom
-              zoomType="hover"
-              zoomScale={1}
-              src={`https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059900/1729059896376_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-0-202408030114.webp`}
-            />
-          </div>
-          <div className="item">
-            <InnerImageZoom
-              zoomType="hover"
-              zoomScale={1}
-              src={`https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059900/1729059896376_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-0-202408030114.webp`}
-            />
-          </div>
-          <div className="item">
-            <InnerImageZoom
-              zoomType="hover"
-              zoomScale={1}
-              src={`https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059900/1729059896376_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-0-202408030114.webp`}
-            />
-          </div>
-        </Slider>
+    <div className="product-zoom position-relative">
+      <div className="badge badge-primary">{props.discount}%</div>
+      <Slider {...Settings2} className="zoomSlider" ref={zoomSliderBig}>
+        {props?.images?.map((item, index) => {
+          return (
+            <div className="item" key={index}>
+              <InnerImageZoom zoomType="hover" zoomScale={1} src={item} />
+            </div>
+          );
+        })}
+      </Slider>
 
-        <Slider {...Settings} className="zoomSlider" ref={zoomSlider}>
-          <div className="item">
-            <img
-              src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059902/1729059896441_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-1-202408030114.jpg"
-              className="w-100"
-              onClick={() => goto(0)}
-            />
-          </div>
-          <div className="item">
-            <img
-              src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059904/1729059896503_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-2-202408030114.webp"
-              className="w-100"
-              onClick={() => goto(1)}
-            />
-          </div>
-          <div className="item">
-            <img
-              src="https://res.cloudinary.com/dy2p0n2xc/image/upload/v1729059902/1729059896441_altecia-the-perfect-pair-women-cotton-co-ord-set-tie-dye-tracksuit-with-insert-pockets-women-tie-dye-2-piece-co-ord-set-1pair-size-xl-product-images-rvifrbqagu-1-202408030114.jpg"
-              className="w-100"
-              onClick={() => goto(2)}
-            />
-          </div>
-        </Slider>
-      </div>
- 
+      <Slider {...Settings} className="zoomSlider" ref={zoomSlider}>
+        {props?.images?.map((item, index) => {
+          return (
+            <div className="item" key={index}>
+              <img src={item} className="w-100" onClick={() => goto(index)} />
+            </div>
+          );
+        })}
+      </Slider>
+    </div>
   );
 }
 

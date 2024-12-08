@@ -4,14 +4,119 @@ import Logo from "../../assets/img/logo.jpg";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import GoogleImg from "../../assets/img/GoogleSignInLight.png";
+import { useNavigate } from "react-router-dom";
+import { postData } from "../../utils/api";
+import { useState } from "react";
 
 function SignIn() {
   const context = useContext(MyContext);
+  const [isLoading, setIsloading] = useState(false);
+
+  const history = useNavigate();
+
   useEffect(() => {
     context.setIsHeaderFooterShow(false);
   });
+  //
+  const [formfields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onchangeInput = (e) => {
+    setFormFields({
+      ...formfields,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const login = (e) => {
+    e.preventDefault();
+
+    console.log(formfields);
+    if (formfields.email === "") {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Email cannot be blank!",
+      });
+      return false;
+    }
+
+    if (formfields.password === "") {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Password cannot be blank!",
+      });
+      return false;
+    }
+    setIsloading(true);
+    postData("/api/user/signin", formfields)
+      .then((res) => {
+        try {
+          if (res.error !== true) {
+            const user = {
+              name: res.user?.name,
+              email: res.user?.email,
+              userId: res.user?.id,
+            };
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            context.setUser({
+              name: res.user?.name,
+              email: res.user?.email,
+            });
+            console.log(res);
+            context.setAlertBox({
+              open: true,
+              error: false,
+              msg: "User login successfully!",
+            });
+            setIsloading(false);
+            // Navigate to dashboard after successful login
+            setTimeout(() => {
+              // history("/dashboard");
+              window.location.href = "/";
+            });
+          } else {
+            setIsloading(false);
+            context.setAlertBox({
+              open: true,
+              error: true,
+              msg: res.msg,
+            });
+          }
+        } catch (error) {
+          setIsloading(false);
+          // Catch block for handling API errors
+          console.log(error);
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg:
+              error.response?.data?.message ||
+              "An error occurred. Please try again.",
+          });
+        }
+      })
+      .catch((error) => {
+        setIsloading(false);
+        // This catch block will handle any errors from postData
+        console.log(error);
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg:
+            error.response?.data?.message || "An error occurred during login.",
+        });
+      });
+  };
+
   return (
     <section className="section signin-page">
       <div className="shape-buttom">
@@ -35,16 +140,18 @@ function SignIn() {
             <img src={Logo} alt="Logo" />
           </div>
 
-          <form className="mt-3">
+          <form className="mt-3" onSubmit={login}>
             <h2 className="mb-4">Sign In</h2>
             <div className="form-group">
               <TextField
                 id="standard-basic"
                 label="Email"
                 type="email"
-                required
+                 
                 variant="standard"
                 className="w-100"
+                name="email"
+                  onChange={onchangeInput}
               />
             </div>
             <div className="form-group">
@@ -52,15 +159,20 @@ function SignIn() {
                 id="standard-basic"
                 label="Password"
                 type="password"
-                required
+           
                 variant="standard"
                 className="w-100"
+                name="password"
+                  onChange={onchangeInput}
               />
             </div>
 
             <a className="border-effect  cursor txt">Forgot Password?</a>
             <div className="d-flex align-item-center mt-3 mb-3">
-              <Button className="btn-blue  col btn-lg btn-big">Sign In</Button>
+              <Button type="submit" className="btn-blue  col btn-lg btn-big">
+              {isLoading === true ? <CircularProgress /> : "Sign In"}
+
+              </Button>
               <Link to="/">
                 {" "}
                 <Button

@@ -169,6 +169,13 @@ button {
 .header-search button svg {
   font-size: 25px !important;
 }
+#acc-drop ul li {
+  font-size: 16px !important;
+  padding: 7px 15px !important;
+}
+#acc-drop ul li svg {
+  font-size: 15px !important;
+}
 
 header .part3 .circle {
   align-items: center;
@@ -209,15 +216,16 @@ header .part3 .circle svg {
 }
 
 nav .allcat-tab {
-  background: #2bbef9;
-  padding: 8px 20px !important;
+  background: #6d4aae;
   border-radius: 30px !important;
+  padding: 7px 12px !important;
 }
 nav .allcat-tab * {
   color: #fff;
 }
 nav .allcat-tab .text {
   font-weight: 600;
+  font-size: 12px;
 }
 nav .allcat-tab .icon1 svg {
   font-size: 20px !important;
@@ -226,6 +234,14 @@ nav .allcat-tab .icon1 svg {
 nav .allcat-tab .icon2 svg {
   font-size: 15px !important;
   margin-left: 8px;
+}
+nav .nav-part1 {
+  flex: 0 0 22%;
+  max-width: 22%;
+}
+nav .nav-part2 {
+  flex: 0 0 78%;
+  max-width: 78%;
 }
 nav .nav-part1 .car-wrapper {
   position: relative;
@@ -273,7 +289,7 @@ nav .nav-part2 ul li a {
   text-transform: uppercase;
   /* display: flex;
   align-items: center; */
-  padding: 10px 15px;
+  padding: 10px 14px;
   /* transition: all 0.2s ease-in-out; */
   border-radius: 25px;
 }
@@ -486,6 +502,7 @@ e-banner-section .slick-arrows.slick-next::before {
   transition: all 0.3s ease-in-out;
   outline: none;
 }
+
 .product-item .actions button svg {
   color: #000;
   opacity: 0.8;
@@ -493,7 +510,14 @@ e-banner-section .slick-arrows.slick-next::before {
   font-size: 15px;
 }
 .product-item .img-wrapper {
+  background: #fff;
+  border-radius: 7px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 230px;
   overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 .product-item .actions button:hover {
   background: #233a95 !important;
@@ -507,9 +531,10 @@ e-banner-section .slick-arrows.slick-next::before {
 }
 
 .product-item .img-wrapper img {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out !important;
 }
-.product-item .img-wrapper:hover img {
+.product-item .img-wrapper:hover a img {
+  opacity: 1;
   transform: scale(1.1);
 }
 .product-item h4 {
@@ -538,6 +563,13 @@ e-banner-section .slick-arrows.slick-next::before {
 }
 .product_row .item {
   border-right: 1px solid transparent !important;
+}
+.torow .item {
+  width: 23.5%;
+}
+.torow {
+  flex-wrap: wrap;
+  gap: 15px;
 }
 .product_row .swiper-slide:last-child .product-item {
   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
@@ -927,8 +959,9 @@ footer .compyright ul li svg:hover {
 .section {
   padding: 45px 0px;
 }
-.product-details .hd {
+.product-details h2.hd {
   font-size: 26px;
+  line-height: 38px;
 }
 .product-details .old-price {
   font-size: 20px;
@@ -1129,4 +1162,12 @@ a:hover {
 /* //sign up page */
 .signup-page .box {
   width: 500px;
+}
+button .MuiCircularProgress-root {
+  width: 30px !important;
+  height: 30px !important;
+}
+button .loader {
+  width: 25px !important;
+  height: 25px !important;
 }

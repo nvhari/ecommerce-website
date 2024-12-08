@@ -18,7 +18,7 @@ const Navigation = () => {
     <nav>
       <div className="container">
         <div className="row">
-          <div className="col-sm-3 nav-part1">
+          <div className="col-sm-2 nav-part1">
             <div className="car-wrapper">
               <Button
                 className="allcat-tab"
@@ -41,7 +41,7 @@ const Navigation = () => {
                   <li className="list-inline-item">
                     <Link to="/">
                       <Button>
-                        men < FaAngleRight  />{" "}
+                        men <FaAngleRight />{" "}
                       </Button>
                     </Link>
                     <div className="submenu shadow">
@@ -95,7 +95,7 @@ const Navigation = () => {
               </div>
             </div>
           </div>
-          <div className="col-sm-9 nav-part2 d-flex align-items-center">
+          <div className="col-sm-10 nav-part2 d-flex align-items-center">
             <ul className="list list-inline ml-auto">
               <li className="list-inline-item">
                 <Link to="/">
@@ -114,29 +114,9 @@ const Navigation = () => {
                   <Link to="/">Watches</Link>
                 </div>
               </li>
+
               <li className="list-inline-item">
-                <Link to="/">
-                  <GoLightBulb />
-                  Womwn
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/">
-                  <GiFruitBowl />
-                  beauty
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/">
-                  <LiaBlogSolid />
-                  watches
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/">kids</Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/">gift</Link>
+                <Link to="/shop">Shop</Link>
               </li>
               <li className="list-inline-item">
                 <Link to="/">

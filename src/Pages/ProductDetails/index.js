@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductZoom from "../../Components/ProductZoom";
 import Rating from "@mui/material/Rating";
 import QuantityBox from "../../Components/QuantityBox";
@@ -8,36 +8,52 @@ import { FaRegHeart } from "react-icons/fa";
 import { MdCompareArrows } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
 import RelatedProducts from "./RelatedProducts";
+import { useParams } from "react-router-dom";
+import { fetchdataFromApi } from "../../utils/api";
 
 function ProductDetails() {
   const [activeSize, setActiveSize] = useState(null);
+  const { id } = useParams();
+  const [productData, setProductData] = useState([]);
   const isActive = (index) => {
     setActiveSize(index);
   };
+
+  //
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    fetchdataFromApi(`api/products/${id}`).then((res) => {
+      setProductData(res);
+      console.log(res);
+      console.log(productData);
+    });
+  }, []);
   return (
     <>
       <section className="product-details section">
         <div className="container">
           <div className="row">
             <div className="col-md-4">
-              <ProductZoom />
+              <ProductZoom
+                images={productData?.images}
+                discount={productData?.discount}
+              />
             </div>
             <div className="col-md-8 pl-5 pr-5">
-              <h2 className="hd text-capitalize">
-                All Natural Chicken Meatballs
-              </h2>
+              <h2 className="hd text-capitalize">{productData?.name}</h2>
               <ul className="list list-inline d-flex align-items-center">
                 <li className="list-inline-item">
                   <div className="d-flex align-items-center">
                     <span className="text-light mr-2">Brands :</span>
-                    <span>Welch's </span>
+                    <span>{productData?.brand} </span>
                   </div>
                 </li>
                 <li className="list-inline-item ml-4">
                   <div className="d-flex align-items-center">
                     <Rating
                       name="read-only"
-                      value={5}
+                      value={parseInt(productData?.rating)}
                       readOnly
                       precision={0.5}
                       size="small"
@@ -47,39 +63,36 @@ function ProductDetails() {
                 </li>
               </ul>
               <div className="d-flex info mb-3">
-                <span className="old-price">$20.00</span>
-                <span className="net-price text-danger ml-2">$15.00</span>
+                <span className="old-price">Rs {productData?.oldPrice}</span>
+                <span className="net-price text-danger ml-2">
+                  Rs {productData?.price}
+                </span>
               </div>
               <span className="badge badge-success">IN STOCK</span>
-              <p className="mt-3">
-                Rs: Rs: Kurta: The kurta is the top piece, which is a long
-                tunic-style garment that can vary in length, sleeve style, and
-                neckline. In this set, it is made from rayon fabric, which is
-                known for its softness, smooth texture, and breathability. Rayon
-                kurta often comes in a variety of prints, patterns, and colors,
-                catering to different tastes and occasio.
-              </p>
-              <div className="product-size d-flex align-items-center  ">
-                <span>Size / Weight:</span>
-                <ul className="list list-inline mb-0 pl-4">
-                  <li className="list-inline-item">
-                    <a
-                      className={`tag ${activeSize === 0 ? "active" : ""}`}
-                      onClick={() => isActive(0)}
-                    >
-                      50g
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a
-                      className={`tag ${activeSize === 1 ? "active" : ""}`}
-                      onClick={() => isActive(1)}
-                    >
-                      100g
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <p className="mt-3">{productData?.description}</p>
+
+              {productData?.productSIZE?.length !== 0 && (
+                <div className="product-size d-flex align-items-center  ">
+                  <span>Size / Weight:</span>
+                  <ul className="list list-inline mb-0 pl-4">
+                    {productData?.productSIZE?.map((item, index) => {
+                      return (
+                        <li className="list-inline-item">
+                          <a
+                            className={`tag ${
+                              activeSize === index ? "active" : ""
+                            }`}
+                            onClick={() => isActive(index)}
+                          >
+                            {item}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+
               <div className="d-flex align-items-center mt-3">
                 <QuantityBox />
                 <Button className="btn-blue btn-lg btn-big btn-round">
@@ -99,8 +112,8 @@ function ProductDetails() {
             </div>
           </div>
 
-          <RelatedProducts title="Related Product"/>
-          <RelatedProducts title="Recently viewed Product"/>
+          <RelatedProducts title="Related Product" />
+          <RelatedProducts title="Recently viewed Product" />
         </div>
       </section>
     </>
