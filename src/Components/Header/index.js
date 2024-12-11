@@ -38,12 +38,12 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const logout=()=>{
-    setAnchorEl(null)
-    localStorage.clear()
-    context.setIsLogin(false)
-  }
-  
+  const logout = () => {
+    setAnchorEl(null);
+    localStorage.clear();
+    context.setIsLogin(false);
+  };
+
   return (
     <div className="header-wrapper">
       <div className="top-strip bg-blue">
@@ -131,7 +131,13 @@ const Header = () => {
                 }
 
                 <div className="cart-tab d-flex aligh-items-center">
-                  <span className="price">$3.29</span>
+                  <span className="price">
+                    Rs{" "}
+                    {context.cartData?.cartList?.length !== 0 &&
+                      context.cartData?.cartList
+                        ?.map((item) => parseInt(item.price) * item.quantity)
+                        .reduce((total, value) => total + value, 0)}
+                  </span>
                   <div className="position-relative">
                     <Link to="/cart">
                       <Button className="circle">
@@ -139,7 +145,7 @@ const Header = () => {
                       </Button>
                     </Link>
                     <sapan className="count d-flex aligh-items-center justify-content-center">
-                      1
+                     {context.cartData?.cartList?.length}
                     </sapan>
                   </div>
                 </div>

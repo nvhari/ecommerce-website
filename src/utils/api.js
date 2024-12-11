@@ -33,13 +33,18 @@ export const postData = async (url, formData) => {
     throw error; // Rethrow the error for the caller to handle
   }
 };
+export const editData = async (url, updatedData) => {
+  console.log(`Requesting: http://localhost:4000${url}`, updatedData);
+  try {
+    const res = await axios.put(`http://localhost:4000${url}`, updatedData);
+    return res;
+  } catch (error) {
+    console.error("Error in editData:", error);
+    throw error;
+  }
+};
 
-export const editData = async(url,updatedData)=>{
-  const {res} = await axios.put(`http://localhost:4000${url}`,updatedData)
-  return res
-}
-
-export const deleteData = async(url)=>{
-  const {res}= await axios.delete(`http://localhost:4000${url}`)
+export const deleteData = async (url) => {
+  const { res } = await axios.delete(`http://localhost:4000${url}`);
   return res;
-}
+};

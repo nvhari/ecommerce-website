@@ -13,7 +13,7 @@ import Cart from "./Pages/Cart";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ProductModal from "./Components/ProductModal";
-import { fetchdataFromApi } from "./utils/api";
+import { fetchdataFromApi, postData } from "./utils/api";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 const MyContext = createContext();
@@ -24,6 +24,9 @@ function App() {
   const [isHeaderFooterShow, setIsHeaderFooterShow] = useState(true);
   const [productData, setProductData] = useState();
   const [isLogin, setIsLogin] = useState(false);
+  const [cartData, setCartData] = useState();
+  const [addingInCart, setAddingInCart] = useState(false);
+  let [cartFields, setCartFields] = useState({});
 
   const [user, setUser] = useState({
     name: "",
@@ -67,7 +70,19 @@ function App() {
 
   useEffect(() => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
+    //cart count
+    fetchdataFromApi(`api/cart`).then((res) => {
+      setCartData(res);
+    });
   }, []);
+
+  const getCartdata = () => {
+    fetchdataFromApi(`api/cart`).then((res) => {
+      setCartData(res);
+    });
+  };
+  //cart count end
+
   //
   useEffect(() => {
     // alert(isOpenProductModal.id)
@@ -87,6 +102,33 @@ function App() {
   const CloseProductModal = () => {
     setisOpenProductModal(false);
   };
+
+  //add to cart fn
+  const addToCart = (data) => {
+    console.log(data);
+    setAddingInCart(true);
+    postData(`/api/cart/add`, data).then((res) => {
+      if (res.status !== false) {
+        setAlertBox({
+          open: true,
+          error: false,
+          msg: "Item is added in the cart",
+        });
+        setTimeout(() => {
+          setAddingInCart(false);
+        }, 1000);
+        getCartdata();
+      } else {
+        setAlertBox({
+          open: true,
+          error: true,
+          msg: res.msg,
+        });
+        setAddingInCart(false);
+      }
+    });
+  };
+
   const values = {
     countryList,
     selectCountry,
@@ -101,12 +143,20 @@ function App() {
     setAlertBox,
     user,
     setUser,
+    addToCart,
+
+    addingInCart,
+    setAddingInCart,
+    cartFields,
+    setCartFields,
+    cartData,
+    setCartData,
+    getCartdata,
   };
 
   return (
     <BrowserRouter>
       <MyContext.Provider value={values}>
-        {isHeaderFooterShow === true && <Header />}
         <Snackbar
           open={alertBox.open}
           autoHideDuration={6000}
@@ -121,6 +171,7 @@ function App() {
             {alertBox.msg}
           </Alert>
         </Snackbar>
+        {isHeaderFooterShow === true && <Header />}
         <Routes>
           <Route path="/" exact={true} element={<Home />} />
           {/* <Route path="/cat/:id" exact={true} element={<Listing />} /> */}

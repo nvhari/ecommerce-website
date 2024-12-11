@@ -791,7 +791,7 @@ footer .compyright ul li svg:hover {
   color: #000; /* Active dot color */
 }
 .quantity-drop {
-  width: 150px;
+  width: 160px;
   gap: 20px;
 }
 .quantity-drop button {
@@ -1027,11 +1027,19 @@ a:hover {
 .cart-itemimg-wrapper {
   width: 250px;
 }
+.cart-itemimg-wrapper .info {
+  width: 80%;
+}
 .cart-itemimg-wrapper .image-wrapper {
-  width: 100px;
+  width: 20%;
+  height: 80px;
   overflow: hidden;
 }
-
+.cart-itemimg-wrapper .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+}
 .cart-itemimg-wrapper h6 {
   color: #343434;
   font-weight: bold;
@@ -1170,4 +1178,14 @@ button .MuiCircularProgress-root {
 button .loader {
   width: 25px !important;
   height: 25px !important;
+}
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  cursor: wait;
+  background: rgba(255, 255, 255, 0.6);
 }
