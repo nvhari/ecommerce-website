@@ -78,6 +78,7 @@ button {
     max-width: 1300px;
   }
 }
+
 .header-wrapper {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -176,7 +177,9 @@ button {
 #acc-drop ul li svg {
   font-size: 15px !important;
 }
-
+#acc-drop ul a {
+  color: #000 !important;
+}
 header .part3 .circle {
   align-items: center;
   min-width: 45px !important;
@@ -1188,4 +1191,34 @@ button .loader {
   z-index: 999;
   cursor: wait;
   background: rgba(255, 255, 255, 0.6);
+}
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+}
+/* //checkoutform// */
+.checkoutform .form-group {
+  margin-bottom: 20px;
+}
+.MuiOutlinedInput-input {
+  background: #f1f1f1 !important;
+}
+
+.order-info {
+  background: #fafafa !important;
+  padding: 25px !important;
+}
+.order-info thead {
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+.order-info thead {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+.order-info tbody td:first-child,
+.order-info thead th:first-child {
+  text-align: left;
 }

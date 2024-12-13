@@ -7,6 +7,7 @@ import ProductModal from "../ProductModal";
 import Slider from "react-slick";
 import { MyContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
+import { postData } from "../../utils/api";
 
 function ProductItem(props) {
   const [isHovered, setIsHovered] = useState(false);
@@ -32,14 +33,51 @@ function ProductItem(props) {
     });
   };
 
-
-  
   useEffect(() => {
     // history(`item product-item ${props.itemView}`)
-    
-   
+
     console.log(props.item);
   }, []);
+  //my list
+  const addToMyList = (id) => {
+    // alert(id);
+    const user = JSON.parse(localStorage.getItem("user"));
+    
+     if(user !== undefined && user !== null && user !== ""){
+      const data = {
+        productTitle: props?.item?.name,
+        image: props.item?.images[0],
+        rating: props.item?.rating,
+        productId: id,
+        price: props.item?.price,
+        userId: user?.userId,
+      };
+  
+      postData(`/api/my-list/add/`, data).then((res) => {
+        if (res.status !== false) {
+          context.setAlertBox({
+            open: true,
+            error: false,
+            msg: "the product added in my list",
+          });
+        } else {
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: res.msg,
+          });
+        }
+      });
+     }else{
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "please login to continue",
+      });
+     }
+   
+  };
+
   return (
     <>
       <div className={`item product-item ${props.itemView}`}>
@@ -64,7 +102,7 @@ function ProductItem(props) {
             <Button onClick={() => viewProductDetails(props.item?._id)}>
               <SlSizeFullscreen />
             </Button>
-            <Button>
+            <Button onClick={() => addToMyList(props.item?._id)}>
               <FaRegHeart />
             </Button>
           </div>

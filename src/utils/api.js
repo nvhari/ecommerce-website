@@ -22,9 +22,9 @@ export const postData = async (url, formData) => {
       body: JSON.stringify(formData),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! status: ${response.status}`);
+    // }
 
     const res = await response.json();
     return res; // Return the parsed JSON data

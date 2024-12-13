@@ -111,12 +111,14 @@ const Header = () => {
                           </ListItemIcon>
                           Orders
                         </MenuItem>
+                        <Link to={'/my-list'}>
                         <MenuItem onClick={handleClose}>
                           <ListItemIcon>
                             <FaHeart fontSize="small" />
                           </ListItemIcon>
                           My List
                         </MenuItem>
+                        </Link>
                         <MenuItem onClick={logout}>
                           <ListItemIcon>
                             <RiLogoutCircleRFill fontSize="small" />

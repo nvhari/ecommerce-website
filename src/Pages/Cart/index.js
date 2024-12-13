@@ -25,10 +25,14 @@ function Cart() {
     setChangeQuantity(val);
   };
   useEffect(() => {
-    fetchdataFromApi(`api/cart`).then((res) => {
+    // fetchdataFromApi(`api/cart`).then((res) => {
+    //   setCartData(res);
+    // });
+    const user = JSON.parse(localStorage.getItem("user"));
+       fetchdataFromApi(`api/cart?userId=${user?.userId}`).then((res) => {
       setCartData(res);
-      
     });
+
   }, []);
 
   const selectedItem = (item, quantityval) => {
@@ -70,7 +74,7 @@ function Cart() {
       fetchdataFromApi(`api/cart`).then((res) => {
         setCartData(res);
       });
-      context.getCartdata()
+      context.getCartdata();
     });
   };
   return (
@@ -192,10 +196,12 @@ function Cart() {
                   </span>
                 </div>
                 <br />
-                <Button className="btn-blue btn-lg btn-big ">
-                  <IoBagCheckOutline />&nbsp;
-                  Checkout
-                </Button>
+                <Link to={"/checkout"}>
+                  <Button className="btn-blue btn-lg btn-big ">
+                    <IoBagCheckOutline />
+                    &nbsp; Checkout
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -16,6 +16,8 @@ import ProductModal from "./Components/ProductModal";
 import { fetchdataFromApi, postData } from "./utils/api";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import MyList from "./Pages/MyList";
+import CheckOut from "./Pages/CheckOut";
 const MyContext = createContext();
 
 function App() {
@@ -185,6 +187,8 @@ function App() {
           <Route exact={true} path="/cart" element={<Cart />}></Route>
           <Route exact={true} path="/signIn" element={<SignIn />}></Route>
           <Route exact={true} path="/signUp" element={<SignUp />}></Route>
+          <Route exact={true} path="/my-list" element={<MyList />}></Route>
+          <Route exact={true} path="/checkout" element={<CheckOut />}></Route>
         </Routes>
         {isHeaderFooterShow === true && <Footer />}
         {isOpenProductModal.open == true && (

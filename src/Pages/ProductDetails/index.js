@@ -42,27 +42,64 @@ function ProductDetails() {
   };
 
   const addtoCart = (data) => {
- 
-      if (activeSize !== null) {
-        const user = JSON.parse(localStorage.getItem("user"));
+    if (activeSize !== null) {
+      const user = JSON.parse(localStorage.getItem("user"));
 
-        cartFields.productTitle = productData?.name;
-        cartFields.image = productData?.images[0];
-        cartFields.rating = productData?.rating;
-        cartFields.price = productData?.price;
-        cartFields.quantity = peoductQuantity;
-        cartFields.subTotal = parseInt(productData?.price * peoductQuantity);
-        cartFields.productId = productData?._id;
-        cartFields.userId = user.userId;
+      cartFields.productTitle = productData?.name;
+      cartFields.image = productData?.images[0];
+      cartFields.rating = productData?.rating;
+      cartFields.price = productData?.price;
+      cartFields.quantity = peoductQuantity;
+      cartFields.subTotal = parseInt(productData?.price * peoductQuantity);
+      cartFields.productId = productData?._id;
+      cartFields.userId = user.userId;
 
-        context.addToCart(cartFields);
-      } else {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "Please select size",
-        });
-      }
+      context.addToCart(cartFields);
+    } else {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Please select size",
+      });
+    }
+  };
+
+  const addToMyList = (id) => {
+    // alert(id);
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user !== undefined && user !== null && user !== "") {
+      const data = {
+        productTitle: productData?.name,
+        image: productData?.images[0],
+        rating: productData?.rating,
+        productId: id,
+        price: productData?.price,
+        userId: user?.userId,
+      };
+
+      postData(`/api/my-list/add/`, data).then((res) => {
+        if (res.status !== false) {
+          context.setAlertBox({
+            open: true,
+            error: false,
+            msg: "the product added in my list",
+          });
+        } else {
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: res.msg,
+          });
+        }
+      });
+    } else {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "please login to continue",
+      });
+    }
   };
 
   const selectedItem = () => {};
@@ -96,6 +133,7 @@ function ProductDetails() {
                       precision={0.5}
                       size="small"
                     />
+
                     <span className="text-light coursor ml-1">Review 1</span>
                   </div>
                 </li>
@@ -141,7 +179,10 @@ function ProductDetails() {
                   {context.addingInCart === true ? "Adding..." : " Add To Cart"}
                 </Button>
                 <Tooltip title="Add to wishlist" placement="bottom">
-                  <Button className="btn-blue btn-lg btn-big btn-circle ml-4">
+                  <Button
+                    className="btn-blue btn-lg btn-big btn-circle ml-4"
+                    onClick={() => addToMyList(id)}
+                  >
                     <FaRegHeart />
                   </Button>
                 </Tooltip>
